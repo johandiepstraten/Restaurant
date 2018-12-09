@@ -2,13 +2,54 @@ package com.example.johan.restaurant;
 
 import android.content.Context;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class CategoriesRequest {
+public class CategoriesRequest implements Response.Listener<JSONObject>, Response.ErrorListener{
 
     private Context context;
+    Callback activity;
+    public CategoriesRequest (Context context)  {
+        this.context = context;
+    }
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        activity.gotCategoriesError(error.getMessage());
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        ArrayList<String> categorylist = new ArrayList<String>();
+        try {
+            JSONArray categories = response.getJSONArray("categories");
+            for (int i = 0; i < categories.length(); i++) {
+                String category = categories.getString(i);
+                categorylist.add(category);
+            }
+            activity.gotCategories(categorylist);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public interface Callback {
         void gotCategories(ArrayList<String> categories);
         void gotCategoriesError(String message);
+    }
+    void getCategories(Callback activity)   {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/categories", null, this, this);
+        queue.add(jsonObjectRequest);
+        this.activity = activity;
+
     }
 }
