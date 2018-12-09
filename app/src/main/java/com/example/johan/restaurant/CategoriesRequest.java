@@ -50,6 +50,5 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/categories", null, this, this);
         queue.add(jsonObjectRequest);
         this.activity = activity;
-
     }
 }
