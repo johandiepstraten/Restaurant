@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,6 +47,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 String clickedcategory = (String) parent.getItemAtPosition(position).toString();
 //                TextView test = findViewById(R.id.textView);
 //                test.setText(clickedcategory);
@@ -65,5 +67,12 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
     @Override
     public void gotCategoriesError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+//    close app if android back button is pressed in this screen
+    public void onBackPressed() {
+        Intent close = new Intent(Intent.ACTION_MAIN);
+        close.addCategory(Intent.CATEGORY_HOME);
+        close.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(close);
     }
 }

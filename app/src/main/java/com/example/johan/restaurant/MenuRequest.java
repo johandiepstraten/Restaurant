@@ -1,6 +1,7 @@
 package com.example.johan.restaurant;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,21 +40,33 @@ public class MenuRequest implements Response.Listener<JSONObject>, Response.Erro
                 String image_url = current_menu.getString("image_url");
                 float price = BigDecimal.valueOf(current_menu.getDouble("price")).floatValue();
                 menuitemlist.add(new MenuItem(name, description, category, image_url, price));
+                Log.d("test", "ik ben hier");
             }
             activity.gotMenu(menuitemlist);
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.d("test", "ik ben hier2");
+
         }
     }
     public interface Callback {
         void gotMenu(ArrayList<MenuItem> menus);
         void gotMenuError(String message);
+
     }
     void getMenu(Callback activity)   {
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/menu", null, this, this);
+//        JsonObjectRequest jsonObjectRequest = null;
+//        if (category == "entrees")  {
+//            jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/menu?category=entrees", null, this, this);
+//        }
+//        else    {
+//            jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/menu?category=appetizers", null, this, this);
+//        }
         queue.add(jsonObjectRequest);
         this.activity = activity;
+
 
     }
 }
