@@ -17,12 +17,12 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
     MenuItem item;
     String category;
     ArrayList<MenuItem> dishes = new ArrayList<>();
+
+//    Get name of category of which user wants to see menus and ask for these menus
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-//        Bundle categories = getIntent().getExtras();
-//        category = categories.getString("category");
         if (savedInstanceState == null) {
             Bundle categories = getIntent().getExtras();
             if (categories == null) {
@@ -35,28 +35,21 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
         Toast.makeText(this, "Started", Toast.LENGTH_SHORT).show();
 
         }
-//        if (category != "entrees" && category != "appetizers")  {
-//            Intent intent = new Intent(MenuActivity.this, CategoriesActivity.class);
-//            startActivity(intent);
-//        }
-
     }
-
+//  Get menus from online Json file and filter to selected category
     @Override
     public void gotMenu(ArrayList<com.example.johan.restaurant.MenuItem> menus) {
-//        Stuur alleen entrees of appetizers door
         ArrayList<com.example.johan.restaurant.MenuItem> selectedmenus = new ArrayList<>();
         for (int i = 0; i<menus.size(); i++)    {
             if(menus.get(i).getCategory().equals(category)) {
                 selectedmenus.add(menus.get(i));
             }
         }
-
-
+//      Show menus in adapter
         MenuAdapter adapter = new MenuAdapter(this, R.layout.menu_row, selectedmenus);
         ListView listView = findViewById(R.id.menuview);
         listView.setAdapter(adapter);
-
+//      Check which item is clicked by user and send user to FoodActivity with chosen menu
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -66,18 +59,8 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
                 startActivity(intent);
             }
         });
-//        for(int i = 0; i < menus.size(); i++) {
-//            item = menus.get(i);
-//            String currentcategory = item.getCategory();
-//            if (currentcategory == category)    {
-//                String name = item.getName();
-//                dishes.add(name);
-//                float price = item.getPrice();
-//
-//            }
-//        }
     }
-
+//      Print possible error
     @Override
     public void gotMenuError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();

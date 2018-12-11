@@ -12,6 +12,8 @@ import com.squareup.picasso.Picasso;
 public class FoodActivity extends AppCompatActivity {
     MenuItem item;
     Context context;
+
+//    Get all information of passed MenuItem object and set layout to show information about the dish
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

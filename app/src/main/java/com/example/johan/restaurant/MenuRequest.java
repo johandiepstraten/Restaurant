@@ -22,11 +22,12 @@ public class MenuRequest implements Response.Listener<JSONObject>, Response.Erro
     public MenuRequest (Context context)  {
         this.context = context;
     }
+//    send error message if percieved
     @Override
     public void onErrorResponse(VolleyError error) {
         activity.gotMenuError(error.getMessage());
     }
-
+//    Get list of MenuItem objects from online Json file. Send it to Callback
     @Override
     public void onResponse(JSONObject response) {
         ArrayList<MenuItem> menuitemlist = new ArrayList<MenuItem>();
@@ -40,33 +41,23 @@ public class MenuRequest implements Response.Listener<JSONObject>, Response.Erro
                 String image_url = current_menu.getString("image_url");
                 float price = BigDecimal.valueOf(current_menu.getDouble("price")).floatValue();
                 menuitemlist.add(new MenuItem(name, description, category, image_url, price));
-                Log.d("test", "ik ben hier");
             }
             activity.gotMenu(menuitemlist);
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("test", "ik ben hier2");
-
         }
     }
+//  Send gotten string list or error message back to MenuActivity
     public interface Callback {
         void gotMenu(ArrayList<MenuItem> menus);
         void gotMenuError(String message);
 
     }
+//    Set url from which to get online Json file
     void getMenu(Callback activity)   {
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/menu", null, this, this);
-//        JsonObjectRequest jsonObjectRequest = null;
-//        if (category == "entrees")  {
-//            jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/menu?category=entrees", null, this, this);
-//        }
-//        else    {
-//            jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/menu?category=appetizers", null, this, this);
-//        }
         queue.add(jsonObjectRequest);
         this.activity = activity;
-
-
     }
 }

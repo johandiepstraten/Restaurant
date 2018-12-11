@@ -21,11 +21,12 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
     public CategoriesRequest (Context context)  {
         this.context = context;
     }
+//    send error message if percieved
     @Override
     public void onErrorResponse(VolleyError error) {
         activity.gotCategoriesError(error.getMessage());
     }
-
+//    Get list of categorie strings from online Json file
     @Override
     public void onResponse(JSONObject response) {
         ArrayList<String> categorylist = new ArrayList<String>();
@@ -33,6 +34,7 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
             JSONArray categories = response.getJSONArray("categories");
             for (int i = 0; i < categories.length(); i++) {
                 String category = categories.getString(i);
+
                 categorylist.add(category);
             }
             activity.gotCategories(categorylist);
@@ -40,11 +42,12 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
             e.printStackTrace();
         }
     }
-
+//  Send gotten string list or error message back to CategoriesActivity
     public interface Callback {
         void gotCategories(ArrayList<String> categories);
         void gotCategoriesError(String message);
     }
+//    Set url from which to get online Json file
     void getCategories(Callback activity)   {
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/categories", null, this, this);

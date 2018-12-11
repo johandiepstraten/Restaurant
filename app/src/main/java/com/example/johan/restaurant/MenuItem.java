@@ -1,9 +1,12 @@
 package com.example.johan.restaurant;
 
-public class MenuItem {
+import java.io.Serializable;
+
+public class MenuItem implements Serializable {
     private String name, description, category, imageUrl;
     private float price;
 
+//    Initiate class in which each dish can be an object
     public MenuItem(String name, String description, String category, String imageUrl, float price) {
         this.name = name;
         this.description = description;

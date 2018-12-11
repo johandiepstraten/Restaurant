@@ -26,13 +26,13 @@ public class MenuAdapter extends ArrayAdapter<MenuItem> {
 
     private ArrayList<MenuItem> menus;
     private Context context;
+
+//    Set adapter to view certain values of menus of chosen category in listview
     public View getView(int position, View listView, ViewGroup parent) {
         Log.d("test", "ik ben hier7");
-
         if (listView == null) {
             listView = LayoutInflater.from(getContext()).inflate(R.layout.menu_row, parent, false);
         }
-
         MenuItem currentmenu = menus.get(position);
         String name = currentmenu.getName();
 //        String image = currentmenu.getImageUrl();
@@ -40,12 +40,10 @@ public class MenuAdapter extends ArrayAdapter<MenuItem> {
         ((TextView) listView.findViewById(R.id.dishname)).setText(name);
         ((TextView) listView.findViewById(R.id.amount)).setText("€ " + price);
         ImageView imageurl = listView.findViewById(R.id.url_image);
-
         Picasso.with(context).load(currentmenu.getImageUrl()).into(imageurl);
-
         return listView;
     }
-
+//  Initiate adapter
     public MenuAdapter(Context context, int resource, ArrayList<MenuItem> menus) {
         super(context, resource, menus);
         this.menus = menus;

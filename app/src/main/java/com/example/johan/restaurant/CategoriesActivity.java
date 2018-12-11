@@ -19,6 +19,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
     private ArrayList<String> categories;
     private ArrayAdapter<String> thisadapter;
 
+//    Initiate the getting of categories from the online Json file. Let the user know when it is done
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +33,6 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
 
     @Override
     public void gotCategories(ArrayList<String> categories) {
-
-//        Toast.makeText(this, categories.get(0), Toast.LENGTH_LONG).show();
         ListView listView = findViewById(R.id.listview);
 
         // Create the array adapter to bind the array to the listView
@@ -43,27 +42,21 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
         );
         listView.setAdapter(thisadapter);
 
-
+//      Set listener to know which item from the adapter is clicked by the user.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+//                Send user to the menu list of the clicked category
                 String clickedcategory = (String) parent.getItemAtPosition(position).toString();
-//                TextView test = findViewById(R.id.textView);
-//                test.setText(clickedcategory);
-//                Toast.makeText(this, clickedcategory, Toast.LENGTH_LONG).show();
-
-//                String category = clickedcategory.getString(0);
-
                 Intent intent = new Intent(CategoriesActivity.this, MenuActivity.class);
                 intent.putExtra("category", clickedcategory);
                 startActivity(intent);
-
             }
 
         });
     }
-
+//      Print possible error
     @Override
     public void gotCategoriesError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
