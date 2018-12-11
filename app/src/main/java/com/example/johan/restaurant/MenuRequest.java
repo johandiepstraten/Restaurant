@@ -22,12 +22,14 @@ public class MenuRequest implements Response.Listener<JSONObject>, Response.Erro
     public MenuRequest (Context context)  {
         this.context = context;
     }
-//    send error message if percieved
+
+//    send error message if perceived
     @Override
     public void onErrorResponse(VolleyError error) {
         activity.gotMenuError(error.getMessage());
     }
-//    Get list of MenuItem objects from online Json file. Send it to Callback
+
+//    Get list of MenuItem objects from online Json file.
     @Override
     public void onResponse(JSONObject response) {
         ArrayList<MenuItem> menuitemlist = new ArrayList<MenuItem>();

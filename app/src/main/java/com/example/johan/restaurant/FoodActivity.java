@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 public class FoodActivity extends AppCompatActivity {
-    MenuItem item;
+//    MenuItem item;
     Context context;
 
 //    Get all information of passed MenuItem object and set layout to show information about the dish
@@ -18,20 +18,25 @@ public class FoodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
-        Intent intent = getIntent();
-        item = (MenuItem) intent.getSerializableExtra("clickedmenu");
-        String name = item.getName();
-        String description = item.getDescription();
-        String image = item.getImageUrl();
-        float price = item.getPrice();
+        Bundle values = getIntent().getExtras();
+        String name = values.getString("name");
+        String description = values.getString("description");
+        String image = values.getString("url");
+        float price = values.getFloat("price");
+//        Intent intent = getIntent();
+//        MenuItem item = (MenuItem) intent.getSerializableExtra("clickedmenu");
+//        String name = item.getName();
+//        String description = item.getDescription();
+//        String image = item.getImageUrl();
+//        float price = item.getPrice();
         ((TextView) findViewById(R.id.finalname)).setText(name);
         ((TextView) findViewById(R.id.finaldescription)).setText(description);
         ((TextView) findViewById(R.id.finalprice)).setText("€ " + price);
         ImageView imageurl = findViewById(R.id.url_image);
-        Picasso.with(context).load(image).into(imageurl);
+//        Picasso.with(context).load(image).into(imageurl); // of foodactivity.this
     }
 //    send user back to MenuActivity
     public void onBackPressed() {
-        startActivity(new Intent(FoodActivity.this, MenuActivity.class));
+        startActivity(new Intent(FoodActivity.this, CategoriesActivity.class));
     }
 }
