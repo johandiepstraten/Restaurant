@@ -42,14 +42,12 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
         for (int i = 0; i<menus.size(); i++)    {
             if(menus.get(i).getCategory().equals(category)) {
                 selectedmenus.add(menus.get(i));
-                Log.d("hellup", "is dit gelukt?" + menus.get(i).getName());
             }
         }
 //      Show menus in adapter
         MenuAdapter adapter = new MenuAdapter(this, R.layout.menu_row, selectedmenus);
         ListView listView = findViewById(R.id.menuview);
         listView.setAdapter(adapter);
-        Log.d("hellup", "ben ik hier dan wel?");
 
 //      Check which item is clicked by user and send user to FoodActivity with chosen menu
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,7 +66,6 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
                 values.putFloat("price", price);
                 intent.putExtras(values);
                 Log.d("honee", "wutt" + clickedmenu.getName());
-//                intent.putExtra("menu", clickedmenu);
                 startActivity(intent);
             }
         });

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,8 +33,11 @@ public class FoodActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.finalname)).setText(name);
         ((TextView) findViewById(R.id.finaldescription)).setText(description);
         ((TextView) findViewById(R.id.finalprice)).setText("€ " + price);
-        ImageView imageurl = findViewById(R.id.url_image);
-//        Picasso.with(context).load(image).into(imageurl); // of foodactivity.this
+        ImageView imageurl = findViewById(R.id.finalimage);
+
+        Log.d("FoodActivity", imageurl + image + this);
+
+        Picasso.with(this).load(image).into(imageurl); // of foodactivity.this
     }
 //    send user back to MenuActivity
     public void onBackPressed() {
